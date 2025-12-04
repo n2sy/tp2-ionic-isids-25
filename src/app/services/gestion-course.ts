@@ -31,5 +31,9 @@ export class GestionCourse {
     getAllCourses() {
         return this.allCourses
     }
+    
+    getCourseById(courseId) {
+       return this.allCourses.find(element => element.id == courseId)
+    }
   
 }

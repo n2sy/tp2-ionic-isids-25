@@ -1,23 +1,20 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title> Blank </ion-title>
+   
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-list>
     @for (course of tabCourses; track $index) {
-        <ion-item>
-            <ion-avatar>
-  <img [src]="course.logo" />
-</ion-avatar>
-            <ion-label class="ion-margin-start"> {{ course.title }}</ion-label>
-            
-        </ion-item>
-        
-    }
+    <ion-item [routerLink]="['/details', course.id]" >
+      <ion-avatar>
+        <img [src]="course.logo" />
+      </ion-avatar>
+      <ion-label class="ion-margin-start"> {{ course.title }}</ion-label>
+    </ion-item>
 
+    }
   </ion-list>
 </ion-content>

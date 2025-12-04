@@ -1,6 +1,16 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar  color="secondary">
     <ion-title>details</ion-title>
+    <ion-buttons slot="start">
+        <ion-back-button defaultHref="/add"></ion-back-button>
+        
+    </ion-buttons>
+    <ion-buttons slot="end">
+    
+            <ion-icon (click)="presentAlert()" slot="icon-only" name="trash-outline"></ion-icon>
+            
+        
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
