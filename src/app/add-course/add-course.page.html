@@ -5,9 +5,52 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">addCourse</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="ion-margin">
+    <form #f="ngForm" (ngSubmit)="submitHandler(f)">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Informations du cours</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-label>Titre du cours*</ion-label>
+          <ion-input
+            #inpTitle="ngModel"
+            ngModel
+            name="title"
+            required
+            minlength="4"
+          ></ion-input>
+          @if (inpTitle.invalid && inpTitle.touched) {
+          <div class="alert alert-danger">
+            Le titre doit être composé d'au moins 4 caractères
+          </div>
+
+          }
+          <ion-label>Auteur du cours*</ion-label>
+          <ion-input ngModel name="author"></ion-input>
+          <ion-label>Logo du cours *</ion-label>
+          <ion-input #inpLogo ngModel name="logo" type="url"></ion-input>
+          @if (inpLogo.value) {
+          <ion-img [src]="inpLogo.value"></ion-img>
+
+          } @else {
+          <i>Logo manquant</i>
+          }
+        </ion-card-content>
+    </ion-card>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Mots-clés </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-label>Ajout d'un mot-clé</ion-label>
+            <ion-input #kw (keyup)="addKeyword(kw)" type="text"></ion-input>
+            @for (keyword of tabKeywords; track $index) {
+                <ion-chip (click)="deleteKeyword(keyword)" color="primary">{{ keyword }}</ion-chip>
+            }
+          </ion-card-content>
+        </ion-card>
+        <ion-button type="submit">Ajouter cours</ion-button>
+    </form>
+  </div>
 </ion-content>
