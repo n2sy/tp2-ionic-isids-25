@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ToastController } from '@ionic/angular';
+import { ActionSheetController, ToastController } from '@ionic/angular';
+import { Photos } from '../services/photos';
 
 @Component({
   selector: 'app-add-course',
@@ -10,7 +11,8 @@ import { ToastController } from '@ionic/angular';
 })
 export class AddCoursePage implements OnInit {
   tabKeywords = [];
-  constructor(private toastCtrl: ToastController) {}
+  temporaryPhotos = [];
+  constructor(private toastCtrl: ToastController, private sheetCtrl : ActionSheetController, private photoSer : Photos) {}
 
   addKeyword(newKeyWordInput) {
     
@@ -20,6 +22,43 @@ export class AddCoursePage implements OnInit {
         this.presentToast();
     }
     newKeyWordInput.value = '';
+  }
+  
+  
+  async showSheet() {
+    const actionSheet = await this.sheetCtrl.create({
+      header: 'Ajouter une photo',
+      buttons: [
+        {
+          text: 'Prendre une photo',
+          icon : 'camera',
+          handler : () => {
+            this.temporaryPhotos.push(this.photoSer.prendrePhoto());
+          }
+        },
+        {
+          text: 'Choisir depuis la galerie',
+          icon : 'image',
+          handler : async () => {
+            let t = await this.photoSer.choisirPhotoGalerie();
+            for (const picture of t) {
+               this.temporaryPhotos.push(picture.webPath);
+                 
+            }
+            
+            
+          }
+        },
+       
+      ],
+    });
+
+    await actionSheet.present();
+  }
+  
+  deletePhoto(photoToDelete) {
+    let i = this.temporaryPhotos.indexOf(photoToDelete);
+    this.temporaryPhotos.splice(i,1)
   }
   
   deleteKeyword(kwToDelete) {

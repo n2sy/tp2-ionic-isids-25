@@ -50,6 +50,40 @@
             }
           </ion-card-content>
         </ion-card>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Photos additionnelles</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            @if (!temporaryPhotos.length) {
+                <div class="no-photos">
+                    <ion-button color="primary" fill="outline" expand="block" (click)="showSheet()">Ajouter une photo</ion-button>
+                    
+                </div>
+                
+            }
+            
+            @else {
+                <ion-grid>
+                    <ion-row>
+                        @for (photo of temporaryPhotos; track $index) {
+                            <ion-col size="6">
+                                <div class="image-preview">
+                                    <img [src]="photo">
+                                    <ion-button (click)="deletePhoto(photo)" fill="clear">
+                                        <ion-icon color="danger" name="trash-outline"></ion-icon>
+                                    </ion-button>
+                                    
+                                </div>
+                                
+                            </ion-col>
+                            
+                        }
+                    </ion-row>
+                </ion-grid>
+            }
+          </ion-card-content>
+        </ion-card>
         <ion-button type="submit">Ajouter cours</ion-button>
     </form>
   </div>
